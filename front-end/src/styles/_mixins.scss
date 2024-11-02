@@ -1,0 +1,52 @@
+@mixin theme-colors(
+    $bg, 
+    $bg-inverse,
+    $on-surface, 
+    $text, 
+    $text-inverse, 
+    $text-70, 
+    $text-70-inverse,
+    $text-50, 
+    $accent, 
+    $secondary-accent,
+    $border,
+    $neutral-1,
+    $neutral-2) {
+    
+    background-color: $bg;
+    // background: $bg;
+    color: $text;
+
+    button {
+        color: $text-inverse;
+        background-color: $bg-inverse;
+        border-color: $bg-inverse;
+
+        &:hover,&:focus {
+            color: $text;
+            background-color: $bg-inverse;
+            border-color: $bg-inverse;
+        }
+
+        &:disabled {
+            // color: $neutral-1;
+            background-color: $neutral-2;
+            border-color: $bg-inverse;
+        }
+    }
+
+    input {
+        border-color: $border;
+        background-color: $bg;
+        color: $text;
+
+        &:hover {
+            border-color: $border;
+        }
+
+        &:disabled {
+            background-color: $neutral-1;
+            border-color: $neutral-1;
+        }
+    }
+}

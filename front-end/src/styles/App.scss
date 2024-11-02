@@ -1,8 +1,77 @@
 // Globals
+@use 'variables' as vars;
+@use 'mixins' as mixins;
+
+$button-size: 40px;
+
+.App {
+  padding: 0 20%;
+  // padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  max-width: 100%;
+  margin: 0;
+  justify-content:space-between;
+
+  @media (max-width: 1200px) {
+    padding: 0 10%;
+  }
+  
+  @media (max-width: 720px) {
+    padding: 0 8%;
+  }
+  
+  @media (max-width: 650px) {
+    padding: 0 6%;
+  }
+
+  @include mixins.theme-colors(
+  vars.$light-bg,
+  vars.$light-bg-inverse,
+  vars.$on-light-surface,
+  vars.$light-text,
+  vars.$light-text-inverse,
+  vars.$light-text-70,
+  vars.$light-text-70-inverse,
+  vars.$light-text-50,
+  vars.$light-accent,
+  vars.$light-secondary-accent,
+  vars.$neutral-20,
+  vars.$neutral-10,
+  vars.$neutral-40
+  );
+}
+
+.App.dark-mode {
+  @include mixins.theme-colors(
+    vars.$dark-bg,
+    vars.$dark-bg-inverse,
+    vars.$on-dark-surface,
+    vars.$dark-text,
+    vars.$dark-text-inverse,
+    vars.$dark-text-70,
+    vars.$dark-text-70-inverse,
+    vars.$dark-text-50,
+    vars.$dark-accent,
+    vars.$dark-secondary-accent,
+    vars.$neutral-90,
+    vars.$neutral-90,
+    vars.$neutral-80
+  );
+}
+
+
+* {
+  font-family: Circular;
+}
+
 body,
 html {
   margin: 0;
-  padding: 0 20%;
+  padding: 0;
+  // padding: 0 20%;
   top: 0;
   left: 0;
   right: 0;
@@ -10,10 +79,80 @@ html {
   min-height: 100vh;
   position:absolute;
   text-align: center;
-  background: #EAF6FF;
+  // background: inherit;
+  background-color: inherit;
   font-family: 'Mukta Malar', sans-serif;
   font-weight: 700;
   overflow: hidden;
+}
+
+p {
+  color: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover, &:focus {
+    border-color: inherit;
+    background-color: inherit;
+    outline: 0;
+  }
+}
+
+input {
+  // border: 2px solid inherit;
+  border-width: 2px;
+  border-style: solid;
+  border-color: inherit;
+  background-color: inherit;
+  color: inherit;
+
+  &:hover {
+    border-color: inherit;
+  }
+
+  &:disabled {
+    background-color: inherit;
+    border-color: inherit;
+    cursor: not-allowed;
+  }
+}
+
+.separator-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: inherit;
+}
+
+#separator-top {
+  max-height: 10%;
+}
+
+#separator-bottom {
+  max-height: 40%;
+}
+
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:space-between;
+  position: relative;
+  width: 100%;
+  height: 48px;
+  position: relative;
+  top: 12px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
 }
 
 /* Optional: Adjust the wrapper's top margin to prevent overlap */
@@ -22,61 +161,49 @@ html {
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  width: 100%;
+  margin: 0;
+  justify-content:center;
+  // background: radial-gradient(ellipse at center, #fff 30%, #ffffff 47%);
+  background: inherit;
+  flex: 1;
+}
+
+.center-contrainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
   max-width: 100%;
   margin: 0;
   justify-content:center;
-  background: radial-gradient(ellipse at center, #fff 30%, #EAF6FF 47%);
-}
-
-h1 {
-  margin: 0;
-  color: white;
-  text-transform: uppercase;
-  font-size: 8vw;
-  text-shadow: 0px 4px #d6e5e3;
-}
-
-button {
-  display: inline-block;
-  padding: 10px;
-  margin: 2px;
-  font-size: 10px;
-  font-weight: 700;
-  font-family: 'Mukta Malar', sans-serif;
-  text-transform: uppercase;
-  color: black;
-  background: transparent;
-  border-radius: 255px 15px 225px 15px/15px 235px 5px 275px;
-  border: 5px solid white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-@media (min-width: 650px) {
-  button {
-    padding: 20px;
-    margin: 10px;
-    font-size: 14px;
-  }
-}
-
-button:focus,
-button:hover {
-  border-color: #1b4353;
-  outline: 0;
+  background: inherit;
 }
 
 // SVG wrapper
-.wrapper {
+#character-wrapper {
   position: relative;
   height: 400px;
   width: 300px;
-  // background-color: #000;
+  z-index: 0;
+}
+
+#status {
+  color: inherit;
+  font-size: 24px;
+  font-weight: 200;
+  margin-top: -96px;
+  z-index: 2;     
+  
+  @media (max-width: 720px) {
+    font-size: 20px;
+  }
 }
 
 /* Container for the top input and button */
 .input-container {
-  position: sticky;
-  bottom: 56px;
+  position: relative;
+  bottom: 40px;
   width: 100%;
   // max-width: 400px;
   // margin: 20px auto 0; /* Centers the container and adds top margin */
@@ -93,68 +220,33 @@ button:hover {
   padding: 8px 20px 8px 16px; /* Adjust padding to accommodate the button */
   font-size: 16px;
   font-weight: 500;
-  border: 2px solid #009ffd;
+  // border: 2px solid inherit;
   border-radius: 1000px;
   outline: none;
   transition: border-color 0.3s ease;
 }
 
-.input:focus {
-  border-color: #007acc;
-}
-
 /* Style the button */
-$button-size: 40px;
-
 .input-button {
   height: $button-size;
   width: $button-size;
   position: absolute;
   right: 0px;
-  background-color: #000;
-  border: 1px solid #000;
+  background-color: inherit;
+  border: 1px solid inherit;
   border-radius: 1000px;
   cursor: pointer;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  // color: #009ffd;
   transition: color 0.3s ease;
-}
+  margin: 10px;
 
-.input-button:hover {
-  border-color: #fff;
-  background-color: #009ffd;
-}
-
-.input-button:focus {
-  outline: none;
-}
-
-
-.separator-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-/* Disabled Input */
-.input:disabled {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
-}
-
-/* Disabled Button */
-.input-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  color: #666;
-}
-
-.status {
-  color: #000;
-  font-size: 24px;
-  font-weight: 200;
-  margin-top: 20px;
+  &:disabled {
+    background-color: inherit;
+    cursor: not-allowed;
+    color: inherit;
+    border-color: inherit;
+  }
 }

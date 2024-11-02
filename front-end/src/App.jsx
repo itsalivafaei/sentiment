@@ -32,12 +32,14 @@ const App = () => {
   const [isAnimationLocked, setIsAnimationLocked] = useState(false);
   const [status, setStatus] = useState('Your thoughts matter! Start typing to get insights. 🧠');
   const [isLoading, setIsLoading] = useState(false);
+  const [isToggled, setIsToggled] = useState(false);
 
   // Refs
   const loopRef = useRef(null); // Ref to store the loop timeout
   const offsetRef = useRef(0); // Ref to store the current offset
   const typingTimerRef = useRef(null); // Ref to store the current typing state
   const stressTimerRef = useRef(null); // Ref to store the current stress state
+  const buttonRef = useRef(null); // Ref to store the button element
 
   // Constant variables
   /* const animationSettings = {
@@ -163,6 +165,19 @@ const App = () => {
     }, [isAnimationLocked]
   );
 
+  // Function to set toggle mode button
+  const handleToggleMode = () => {
+    setIsToggled(!isToggled);
+  };
+
+  const mode = isToggled ? "dark-mode" : "";
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      buttonRef.current.click();
+    }
+  }
+
   useEffect(() => {
     setStatus(getRandomMessage(statusMessages.sleeping));
   }, []);
@@ -244,33 +259,42 @@ const App = () => {
   };
 
 
-    // Cleanup timers and animation frames on unmount
-    useEffect(() => {
-      return () => {
-        if (typingTimerRef.current) {
-          clearTimeout(typingTimerRef.current);
-        }
-        if (stressTimerRef.current) {
-          clearTimeout(stressTimerRef.current);
-        }
-        cancelAnimationFrame(loopRef.current);
-      };
-    }, []);
+
+  // Cleanup timers and animation frames on unmount
+  useEffect(() => {
+    return () => {
+      if (typingTimerRef.current) {
+        clearTimeout(typingTimerRef.current);
+      }
+      if (stressTimerRef.current) {
+        clearTimeout(stressTimerRef.current);
+      }
+      cancelAnimationFrame(loopRef.current);
+    };
+  }, []);
 
   return (
-    <div className="app">
-      <div className='separator-container'></div>
+    <div className={`App ${mode}`}>
+      <div className='header-container'>
+        <p>logo</p>
+        <button id='mode-button'
+        onClick={handleToggleMode}
+        >
+          {isToggled ? 'Light Mode' : 'Dark Mode'}
+        </button>
+      </div>
+      <div className='separator-container' id='separator-top'></div>
       <div className='main-container'>
         {/* <h1>Sentiment Analysis</h1> */}
-        <div className='separator-container'></div>
-        <div className="wrapper">
+        {/* <div className='separator-container'></div> */}
+        <div id='character-wrapper'>
           <ArmLeft animation={animation} armPath={armPathL} />
           <Character animation={animation} />
           <ArmRight animation={animation} armPath={armPathR} />
           <Table />
           <Computer animation={animation} />
         </div>
-        <div className='status'>
+        <div id='status'>
           <p>
             {status}
           </p>
@@ -278,8 +302,10 @@ const App = () => {
         </div>
         {/* <AnimationControls onSetAnimation={handleSetAnimation} /> */}
         {/* Text Input with Button */}
-        <div className='separator-container'></div>
-        <div className='input-container'>
+        <div className='separator-container' id='separator-bottom'></div>
+        
+      </div>
+      <div className='input-container'>
           <input
             type="text"
             className='input'
@@ -290,19 +316,25 @@ const App = () => {
             onMouseLeave={handleMouseLeave}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            disabled={isAnimationLocked}
+            onKeyDown={handleKeyDown}
           />
           <button 
             className='input-button'
             onClick={handleInputButtonClick}
             aria-label='Trigger Sentiment Analysis'
-            disabled={isAnimationLocked} // Disable button if animation is locked
+            disabled={isAnimationLocked || !inputText.trim()} // Disable button if animation is locked
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            ref={buttonRef}
           >
             {/* Right Arrow SVG Icon */}
-            <SendHorizontal size={20} color='#fff' strokeWidth={2.5}/>
+            <SendHorizontal size={20} color={isToggled ? '#000000' : '#ffffff'} strokeWidth={2.5}/>
           </button>
         </div>
-      </div>
-      <div className='separator-container'></div>
+      {/* <div className='separator-container'></div> */}
     </div>
   );
 };
