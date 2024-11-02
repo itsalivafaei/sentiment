@@ -1,0 +1,160 @@
+// Globals
+body,
+html {
+  margin: 0;
+  padding: 0 20%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 100vh;
+  position:absolute;
+  text-align: center;
+  background: #EAF6FF;
+  font-family: 'Mukta Malar', sans-serif;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+/* Optional: Adjust the wrapper's top margin to prevent overlap */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  max-width: 100%;
+  margin: 0;
+  justify-content:center;
+  background: radial-gradient(ellipse at center, #fff 30%, #EAF6FF 47%);
+}
+
+h1 {
+  margin: 0;
+  color: white;
+  text-transform: uppercase;
+  font-size: 8vw;
+  text-shadow: 0px 4px #d6e5e3;
+}
+
+button {
+  display: inline-block;
+  padding: 10px;
+  margin: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Mukta Malar', sans-serif;
+  text-transform: uppercase;
+  color: black;
+  background: transparent;
+  border-radius: 255px 15px 225px 15px/15px 235px 5px 275px;
+  border: 5px solid white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+@media (min-width: 650px) {
+  button {
+    padding: 20px;
+    margin: 10px;
+    font-size: 14px;
+  }
+}
+
+button:focus,
+button:hover {
+  border-color: #1b4353;
+  outline: 0;
+}
+
+// SVG wrapper
+.wrapper {
+  position: relative;
+  height: 400px;
+  width: 300px;
+  // background-color: #000;
+}
+
+/* Container for the top input and button */
+.input-container {
+  position: sticky;
+  bottom: 56px;
+  width: 100%;
+  // max-width: 400px;
+  // margin: 20px auto 0; /* Centers the container and adds top margin */
+
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+/* Style the text input */
+.input {
+  width: 100%;
+  height: 36px;
+  padding: 8px 20px 8px 16px; /* Adjust padding to accommodate the button */
+  font-size: 16px;
+  font-weight: 500;
+  border: 2px solid #009ffd;
+  border-radius: 1000px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  border-color: #007acc;
+}
+
+/* Style the button */
+$button-size: 40px;
+
+.input-button {
+  height: $button-size;
+  width: $button-size;
+  position: absolute;
+  right: 0px;
+  background-color: #000;
+  border: 1px solid #000;
+  border-radius: 1000px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // color: #009ffd;
+  transition: color 0.3s ease;
+}
+
+.input-button:hover {
+  border-color: #fff;
+  background-color: #009ffd;
+}
+
+.input-button:focus {
+  outline: none;
+}
+
+
+.separator-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Disabled Input */
+.input:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+/* Disabled Button */
+.input-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #666;
+}
+
+.status {
+  color: #000;
+  font-size: 24px;
+  font-weight: 200;
+  margin-top: 20px;
+}
