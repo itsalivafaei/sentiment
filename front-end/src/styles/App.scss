@@ -15,18 +15,6 @@ $button-size: 40px;
   margin: 0;
   justify-content:space-between;
 
-  @media (max-width: 1200px) {
-    padding: 0 10%;
-  }
-  
-  @media (max-width: 720px) {
-    padding: 0 8%;
-  }
-  
-  @media (max-width: 650px) {
-    padding: 0 6%;
-  }
-
   @include mixins.theme-colors(
   vars.$light-bg,
   vars.$light-bg-inverse,
@@ -60,6 +48,18 @@ $button-size: 40px;
     vars.$neutral-90,
     vars.$neutral-80
   );
+
+  @media (max-width: 1200px) {
+    padding: 0 10%;
+  }
+  
+  @media (max-width: 720px) {
+    padding: 0 8%;
+  }
+  
+  @media (max-width: 650px) {
+    padding: 0 6%;
+  }
 }
 
 
