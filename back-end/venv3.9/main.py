@@ -8,7 +8,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model
 
 
-model_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'model')
+model_dir = os.path.join(os.path.dirname(__file__), 'model')
 
 # Load the model
 model_load_path = os.path.join(model_dir, 'sentiment_analysis_model.h5')
@@ -42,16 +42,16 @@ def clean_text(text):
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-@app.route('/', methods=['GET'])
-def home():
-    return "Welcome to the Sentiment Analysis API."
+# @app.route('/', methods=['GET'])
+# def home():
+#     return "Welcome to the Sentiment Analysis API."
 
-@app.route('/sentiment', methods=['GET'])
-def sentiment_info():
-    return (
-        "This endpoint accepts POST " + 
-        "requests with JSON payload {'text': 'your text'}."
-        )
+# @app.route('/sentiment', methods=['GET'])
+# def sentiment_info():
+#     return (
+#         "This endpoint accepts POST " + 
+#         "requests with JSON payload {'text': 'your text'}."
+#         )
 
 # Define the sentiment prediction route
 @app.route('/sentiment', methods=['POST'])
@@ -96,4 +96,4 @@ def predict_sentiment():
 # Run the Flask app
 # Bind to '0.0.0.0' to make it accessible externally
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5173)
+    app.run(host="0.0.0.0", port=8080)

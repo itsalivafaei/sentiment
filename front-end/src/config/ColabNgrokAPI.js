@@ -1,6 +1,6 @@
 /*This module handles communication with the Flask backend for sentiment analysis.*/
 
-const BACKEND_URL = 'https://8def-34-80-240-89.ngrok-free.app/sentiment';
+const BACKEND_URL = 'https://sentiment-analysis-57rb.onrender.com/sentiment';
 
 /* Sends a POST request to the Flask backend with the provided text for sentiment analysis.
 @param {string} text - The text to be analyzed.
@@ -18,7 +18,7 @@ export const analyzeSentiment = async (text) => {
         });
 
         if (!response.ok) {
-            throw new Error("Server responded with status: ", response.status);
+            throw new Error("Server responded with status: " + response.status);
         }
 
         const data = await response.json();
