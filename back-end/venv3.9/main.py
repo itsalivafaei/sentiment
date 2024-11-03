@@ -6,10 +6,9 @@ from flask_cors import CORS
 import re
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model
-import time
-import os
 
-model_dir = os.path.join(os.path.dirname(__file__), 'model')
+
+model_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'model')
 
 # Load the model
 model_load_path = os.path.join(model_dir, 'sentiment_analysis_model.h5')
@@ -28,6 +27,7 @@ with open(max_seq_length_load_path, 'rb') as handle:
     max_seq_length = pickle.load(handle)
 print("max_seq_length loaded successfully.")
 
+
 # Define the text cleaning function
 def clean_text(text):
     text = text.lower()
@@ -36,6 +36,7 @@ def clean_text(text):
     text = re.sub(r'[^a-zA-Z\s]', '', text)  # Remove non-alphabetic characters
     text = re.sub(r'\s+', ' ', text).strip()  # Remove extra spaces
     return text
+
 
 # Create a Flask app instance
 app = Flask(__name__)
@@ -47,7 +48,10 @@ def home():
 
 @app.route('/sentiment', methods=['GET'])
 def sentiment_info():
-    return "This endpoint accepts POST requests with JSON payload {'text': 'your text'}."
+    return (
+        "This endpoint accepts POST " + 
+        "requests with JSON payload {'text': 'your text'}."
+        )
 
 # Define the sentiment prediction route
 @app.route('/sentiment', methods=['POST'])
@@ -67,7 +71,12 @@ def predict_sentiment():
         review_sequence = tokenizer.texts_to_sequences([cleaned_review])
 
         # Pad the sequence
-        review_padded = pad_sequences(review_sequence, maxlen=max_seq_length, padding='post', truncating='post')
+        review_padded = pad_sequences(
+            review_sequence, 
+            maxlen=max_seq_length, 
+            padding='post', 
+            truncating='post'
+            )
 
         # Predict sentiment
         prediction = model.predict(review_padded)[0][0]
@@ -76,10 +85,13 @@ def predict_sentiment():
         sentiment = "Positive" if prediction > 0.5 else "Negative"
         probability = prediction if prediction > 0.5 else 1 - prediction
 
-        return jsonify({'sentiment': sentiment, 'probability': float(probability)})
+        return jsonify({
+            'sentiment': sentiment, 'probability': float(probability)
+            })
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 # Run the Flask app
 # Bind to '0.0.0.0' to make it accessible externally
