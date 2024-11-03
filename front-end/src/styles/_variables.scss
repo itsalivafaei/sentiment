@@ -8,6 +8,12 @@ $light-text-70-inverse: #b2b2b2;
 $light-text-50: #808080;
 $light-accent: #eaaa00;
 $light-secondary-accent: #3366cc;
+$light-character-body: #a0d8cb;
+$light-character-eyes: #000;
+$light-character-arms: #eaf6ff;
+$light-character-computer-screen: #D6E5E3;
+$light-character-computer-keyboard: #CACFD6;
+$light-character-table: #fff;
 
 // Dark mode colors
 $dark-bg: #000;
@@ -19,6 +25,12 @@ $dark-text-70-inverse: #4d4d4d;
 $dark-text-50: #86868b;
 $dark-accent: #fed13e;
 $dark-secondary-accent: #5a91ff;
+$dark-character-body: #4a8b7c;
+$dark-character-eyes: #fff;
+$dark-character-arms: #b2b2b2;
+$dark-character-computer-screen: #333333;
+$dark-character-computer-keyboard: #666666;
+$dark-character-table: #000;
 
 // General colors
 $on-light-surface: #000;
@@ -30,7 +42,15 @@ $neutral-60: #999;
 $neutral-80: #666;
 $neutral-90: #2c2c2c;
 
+// Character colors
+
+
 @font-face {
   font-family: Circular;
   src: url('../assets/CircularStd-Book.otf');
 }
+
+$breakpoints: (
+  'mobile': 480px,
+  'tablet': 960px
+  );

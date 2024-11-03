@@ -1,3 +1,5 @@
+@use 'variables' as vars;
+
 @mixin theme-colors(
     $bg, 
     $bg-inverse,
@@ -11,7 +13,13 @@
     $secondary-accent,
     $border,
     $neutral-1,
-    $neutral-2) {
+    $neutral-2,
+    $character-body,
+    $character-eyes,
+    $character-arms,
+    $character-computer-screen,
+    $character-computer-keyboard,
+    $character-table) {
     
     background-color: $bg;
     // background: $bg;
@@ -48,5 +56,56 @@
             background-color: $neutral-1;
             border-color: $neutral-1;
         }
+    }
+
+    // Character colors
+    .arm {
+        & path {
+            stroke: $character-arms
+        }
+    }
+
+    // #character-wrapper {
+    //     .arm {
+    //         & path {
+    //             stroke: $character-arms
+    //         }
+    //     }
+    // }
+
+    .computer {
+        &__screen {
+            fill: $character-computer-screen;
+        }
+
+        &__keyboard {
+            fill: $character-computer-keyboard;
+        }
+    }
+
+    .table {
+        fill: $character-table;
+    }
+
+    .character {
+        &__body {
+            fill: $character-body;
+        }
+        &__eye {
+            fill: $character-eyes;
+        }
+    }
+}
+
+@mixin responsive($breakpoint) {
+    $value: map-get(vars.$breakpoints, $breakpoint);
+    @if $value {
+        @media (max-width: $value) {
+            @content;
+        }
+    }
+    @else {
+        @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Please make sure it is defined in `$breakpoints` map.";
     }
 }

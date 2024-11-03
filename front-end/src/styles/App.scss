@@ -28,40 +28,46 @@ $button-size: 40px;
   vars.$light-secondary-accent,
   vars.$neutral-20,
   vars.$neutral-10,
-  vars.$neutral-40
-  );
-}
-
-.App.dark-mode {
-  @include mixins.theme-colors(
-    vars.$dark-bg,
-    vars.$dark-bg-inverse,
-    vars.$on-dark-surface,
-    vars.$dark-text,
-    vars.$dark-text-inverse,
-    vars.$dark-text-70,
-    vars.$dark-text-70-inverse,
-    vars.$dark-text-50,
-    vars.$dark-accent,
-    vars.$dark-secondary-accent,
-    vars.$neutral-90,
-    vars.$neutral-90,
-    vars.$neutral-80
+  vars.$neutral-40,
+  vars.$light-character-body,
+  vars.$light-character-eyes,
+  vars.$light-character-arms,
+  vars.$light-character-computer-screen,
+  vars.$light-character-computer-keyboard,
+  vars.$light-character-table
   );
 
-  @media (max-width: 1200px) {
+  &.dark-mode {
+    @include mixins.theme-colors(
+      vars.$dark-bg,
+      vars.$dark-bg-inverse,
+      vars.$on-dark-surface,
+      vars.$dark-text,
+      vars.$dark-text-inverse,
+      vars.$dark-text-70,
+      vars.$dark-text-70-inverse,
+      vars.$dark-text-50,
+      vars.$dark-accent,
+      vars.$dark-secondary-accent,
+      vars.$neutral-90,
+      vars.$neutral-90,
+      vars.$neutral-80,
+      vars.$dark-character-body,
+      vars.$dark-character-eyes,
+      vars.$dark-character-arms,
+      vars.$dark-character-computer-screen,
+      vars.$dark-character-computer-keyboard,
+      vars.$dark-character-table
+    );  
+  }
+
+  @include mixins.responsive ('tablet') {
     padding: 0 10%;
   }
-  
-  @media (max-width: 720px) {
-    padding: 0 8%;
-  }
-  
-  @media (max-width: 650px) {
-    padding: 0 6%;
+  @include mixins.responsive ('mobile') {
+    padding: 0 20px;
   }
 }
-
 
 * {
   font-family: Circular;
@@ -81,8 +87,7 @@ html {
   text-align: center;
   // background: inherit;
   background-color: inherit;
-  font-family: 'Mukta Malar', sans-serif;
-  font-weight: 700;
+  font-family: Circular, sans-serif;
   overflow: hidden;
 }
 
@@ -103,7 +108,6 @@ button {
 }
 
 input {
-  // border: 2px solid inherit;
   border-width: 2px;
   border-style: solid;
   border-color: inherit;
@@ -130,10 +134,24 @@ input {
 
 #separator-top {
   max-height: 10%;
+
+  @include mixins.responsive ('mobile') {
+    max-height: 5%;
+  }
+  @include mixins.responsive ('tablet') {
+    max-height: 10%;
+  }
 }
 
 #separator-bottom {
   max-height: 40%;
+
+  @include mixins.responsive ('mobile') {
+    max-height: 20%;
+  }
+  @include mixins.responsive ('tablet') {
+    max-height: 20%;
+  }
 }
 
 
@@ -153,6 +171,11 @@ input {
   margin: 0;
   padding: 0;
   background-color: inherit;
+
+  @include mixins.responsive ('mobile') {
+    top: 8px;
+    height: 36px;
+  }
 }
 
 /* Optional: Adjust the wrapper's top margin to prevent overlap */
@@ -164,7 +187,6 @@ input {
   width: 100%;
   margin: 0;
   justify-content:center;
-  // background: radial-gradient(ellipse at center, #fff 30%, #ffffff 47%);
   background: inherit;
   flex: 1;
 }
@@ -186,6 +208,11 @@ input {
   height: 400px;
   width: 300px;
   z-index: 0;
+
+  @include mixins.responsive ('mobile') {
+    height: 300px;
+    width: 200px;
+  }
 }
 
 #status {
@@ -195,7 +222,11 @@ input {
   margin-top: -96px;
   z-index: 2;     
   
-  @media (max-width: 720px) {
+  @include mixins.responsive ('mobile') {
+    font-size: 18px;
+  }
+
+  @include mixins.responsive ('tablet') {
     font-size: 20px;
   }
 }
@@ -211,6 +242,10 @@ input {
   display: flex;
   align-items: center;
   justify-content: right;
+
+  @include mixins.responsive ('mobile') {
+    bottom: 20px;
+  }
 }
 
 /* Style the text input */
@@ -219,17 +254,25 @@ input {
   height: 36px;
   padding: 8px 20px 8px 16px; /* Adjust padding to accommodate the button */
   font-size: 16px;
-  font-weight: 500;
+  // font-weight: 500;
   // border: 2px solid inherit;
   border-radius: 1000px;
   outline: none;
   transition: border-color 0.3s ease;
+
+  @include mixins.responsive ('mobile') {
+    font-size: 14px;
+  }
+
+  @include mixins.responsive ('tablet') {
+    height: 40px;
+  }
 }
 
 /* Style the button */
 .input-button {
-  height: $button-size;
-  width: $button-size;
+  height: 40px;
+  width: 40px;
   position: absolute;
   right: 0px;
   background-color: inherit;
@@ -248,5 +291,14 @@ input {
     cursor: not-allowed;
     color: inherit;
     border-color: inherit;
+  }
+
+  @include mixins.responsive ('mobile') {
+    
+  }
+
+  @include mixins.responsive ('tablet') {
+    height: 44px;
+    width: 44px;
   }
 }

@@ -1,14 +1,16 @@
 // Main character (body and eyes)
+// Character component
 .character {
     position: relative;
     
     &__eye {
+      fill: inherit;
       transition: transform 0.3s ease;
       transform: translate(10px, 0px);
     }
     
     &__body {
-      fill: #a0d8cb;
+      fill: inherit;
       transition: transform 0.3s ease;
     }
     
@@ -141,11 +143,11 @@
     left: 12%;
     
     &__screen {
-      fill: #D6E5E3;
+      fill: inherit;
     }
     
     &__keyboard {
-      fill: #CACFD6;
+      fill: inherit;
     }
     
     &.-typing {
@@ -162,7 +164,7 @@
     position: absolute;
     top: 58%;
     left: -60%;
-    fill: #fff;
+    fill: inherit;
     width: 200%;
   }
   
@@ -174,7 +176,7 @@
   
     & path {
       fill: none;
-      stroke: #eaf6ff;
+      stroke: inherit;
       stroke-width: 12;
       stroke-linecap: round;
       stroke-miterlimit: 10;
