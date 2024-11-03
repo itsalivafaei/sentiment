@@ -6,7 +6,7 @@ import { Character, ArmLeft, ArmRight, Computer, Table } from './components/Char
 import { getRandomMessage, statusMessages } from './components/Messages'
 import animationSettings from './config/AnimationSettings'
 import { analyzeSentiment } from './config/ColabNgrokAPI'
-import { SendHorizontal } from 'lucide-react'
+import { SendHorizontal, Sun, Moon } from 'lucide-react'
 import './styles/App.scss'
 
 const App = () => {
@@ -276,10 +276,14 @@ const App = () => {
   return (
     <div className={`App ${mode}`}>
       <div className='header-container'>
-        <p>logo</p>
+        <p>Ali Vafaei.</p>
         <button id='mode-button'
         onClick={handleToggleMode}
         >
+          {!isToggled ? 
+            <Sun size={16} strokeWidth={2.5} className='toggle-icon'/> :
+            <Moon size={16} strokeWidth={2.5} className='toggle-icon'/>
+          }
           {isToggled ? 'Light Mode' : 'Dark Mode'}
         </button>
       </div>
@@ -331,8 +335,19 @@ const App = () => {
             ref={buttonRef}
           >
             {/* Right Arrow SVG Icon */}
-            <SendHorizontal size={20} color={isToggled ? '#000000' : '#ffffff'} strokeWidth={2.5}/>
+            <SendHorizontal size={20} strokeWidth={2.5}/>
           </button>
+        </div>
+        <div className='footer-container'>
+          <p className='caption'>
+            Model trained on 50,000 IMDB reviews · Accuracy: >92%; Loss: 0.1963
+          </p>
+          <a 
+          href='https://github.com/itsalivafaei/sentiment/' 
+          target='_blank'
+          >
+          Github Repo
+          </a>
         </div>
       {/* <div className='separator-container'></div> */}
     </div>

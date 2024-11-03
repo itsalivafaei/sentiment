@@ -47,7 +47,14 @@ $neutral-90: #2c2c2c;
 
 @font-face {
   font-family: Circular;
+  font-weight: 400;
   src: url('../assets/CircularStd-Book.otf');
+}
+
+@font-face {
+  font-family: Circular;
+  font-weight: 700;
+  src: url('../assets/CircularStd-Bold.otf');
 }
 
 $breakpoints: (

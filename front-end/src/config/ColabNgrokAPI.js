@@ -1,6 +1,6 @@
 /*This module handles communication with the Flask backend for sentiment analysis.*/
 
-const BACKEND_URL = 'https://sentiment-analysis-57rb.onrender.com/sentiment';
+const BACKEND_URL = 'https://sentiment-analysis-app-dbltjrshha-uc.a.run.app/sentiment';
 
 /* Sends a POST request to the Flask backend with the provided text for sentiment analysis.
 @param {string} text - The text to be analyzed.

@@ -32,14 +32,26 @@
 
         &:hover,&:focus {
             color: $text;
-            background-color: $bg-inverse;
-            border-color: $bg-inverse;
+            background-color: $neutral-2;
+            border-color: $neutral-2;
         }
 
         &:disabled {
-            // color: $neutral-1;
+            color: $text-50;
+            background-color: $neutral-1;
+            border-color: $text-50;
+        }
+    }
+
+    #mode-button {
+        color: $text-inverse;
+        background-color: $bg-inverse;
+        border-color: $bg-inverse;
+
+        &:hover,&:focus {
+            color: $text;
             background-color: $neutral-2;
-            border-color: $bg-inverse;
+            border-color: $neutral-2;
         }
     }
 
@@ -56,6 +68,10 @@
             background-color: $neutral-1;
             border-color: $neutral-1;
         }
+    }
+
+    .footer-container {
+        color: $text-50
     }
 
     // Character colors
