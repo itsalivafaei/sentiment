@@ -1,3 +1,6 @@
 bin
 lib
 google-cloud-sdk
+venv*
+__pycache__/
+*.py[cod]
