@@ -2,3 +2,4 @@ tensorflow==2.15.0
 flask
 pyngrok
 flask-cors
+gunicorn
