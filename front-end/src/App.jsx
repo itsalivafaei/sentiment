@@ -217,7 +217,7 @@ const App = () => {
     setStatus(getRandomMessage(statusMessages.typing));
     setIsLoading(true);
 
-    // cleaer any existing timers
+    // clear any existing timers
     if (typingTimerRef.current) {
       clearTimeout(typingTimerRef.current);
     }
@@ -225,37 +225,28 @@ const App = () => {
       clearTimeout(stressTimerRef.current);
     }
 
-    // start stress timer
-    // stressTimerRef.current = setTimeout(() => {
-    //   handleSetAnimation('stressed');
-    //   setStatus(getRandomMessage(statusMessages.stressed));
+    try {
+      // Send POST request to Flask backend using the analyzeSentiment function
+      const result = await analyzeSentiment(inputText);
 
-    //   stressTimerRef.current = setTimeout(() => {
-    //     setStatus(getRandomMessage(statusMessages.finished));
-    //     setIsAnimationLocked(false);
-    //   }, 4000);
-    // }, 4000);
-    stressTimerRef.current = setTimeout(async () => {
-      handleSetAnimation('stressed');
-      setStatus(getRandomMessage(statusMessages.stressed));
-
-      try {
-        // Send POST request to Flask backend using the analyzeSentiment function
-        const result = await analyzeSentiment(inputText);
-        setStatus(`Sentiment analysis result: Your mood is ${result.sentiment} (with a score of ${(result.probability * 100).toFixed(2)}%)`);
-        setIsAnimationLocked(false);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error analyzing sentiment:", error);
-        setStatus("Error analyzing sentiment. Please try again.");
-      } finally {
-        // Unlock animation and reset input
-        setIsAnimationLocked(false);
-        setInputText("");
-        setAnimationState("sleeping");
-        setIsLoading(false);
-      }
-    }, 4000);
+      stressTimerRef.current = setTimeout(async () => {
+        handleSetAnimation('stressed');
+        setStatus(getRandomMessage(statusMessages.stressed));
+      }, 4000);
+      
+      setStatus(`Sentiment analysis result: Your mood is ${result.sentiment} (with a score of ${(result.probability * 100).toFixed(2)}%)`);
+      setIsAnimationLocked(false);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error analyzing sentiment:", error);
+      setStatus("Error analyzing sentiment. Please try again.");
+    } finally {
+      // Unlock animation and reset input
+      setIsAnimationLocked(false);
+      setInputText("");
+      setAnimationState("sleeping");
+      setIsLoading(false);
+    }
   };
 
 
@@ -340,7 +331,7 @@ const App = () => {
         </div>
         <div className='footer-container'>
           <p className='caption'>
-            Model trained on 50,000 IMDB reviews · Accuracy: >92%; Loss: 0.1963
+            Model trained on 50,000 IMDB reviews · Accuracy: {'>'}92%; Loss: 0.1963
           </p>
           <a 
           href='https://github.com/itsalivafaei/sentiment/' 

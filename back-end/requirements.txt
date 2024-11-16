@@ -3,3 +3,5 @@ flask
 pyngrok
 flask-cors
 gunicorn
+Flask-Limiter
+google-cloud-firestore
