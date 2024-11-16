@@ -115,6 +115,7 @@
 
 @mixin responsive($breakpoint) {
     $value: map-get(vars.$breakpoints, $breakpoint);
+    // $value: map.get(vars.$breakpoints, $breakpoint);
     @if $value {
         @media (max-width: $value) {
             @content;

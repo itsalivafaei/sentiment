@@ -249,6 +249,24 @@ const App = () => {
     }
   };
 
+  // function to set the --vh custom property
+  useEffect(() => {
+    const setVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    // Initial setting
+    setVh();
+
+    // Update on resize
+    window.addEventListener('resize', setVh);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', setVh);
+    };
+  }, []);
+
 
 
   // Cleanup timers and animation frames on unmount
