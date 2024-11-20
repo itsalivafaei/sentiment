@@ -1,13 +1,19 @@
 // SVG sine loop based on https://codepen.io/jaromvogel/pen/jWjWqN
 // Color scheme: https://coolors.co/009ffd-eaf6ff-cacfd6-d6e5e3-9fd8cb
 
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { Character, ArmLeft, ArmRight, Computer, Table } from './components/Character.jsx'
-import { getRandomMessage, statusMessages } from './components/Messages'
-import animationSettings from './config/AnimationSettings'
-import { analyzeSentiment } from './config/ColabNgrokAPI'
-import { SendHorizontal, Sun, Moon } from 'lucide-react'
-import './styles/App.scss'
+import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  Character,
+  ArmLeft,
+  ArmRight,
+  Computer,
+  Table,
+} from "./components/Character.jsx";
+import { getRandomMessage, statusMessages } from "./components/Messages";
+import animationSettings from "./config/AnimationSettings";
+import { analyzeSentiment } from "./config/ColabNgrokAPI";
+import { SendHorizontal, Sun, Moon } from "lucide-react";
+import "./styles/App.scss";
 
 const App = () => {
   // State variables
@@ -30,7 +36,9 @@ const App = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [inputText, setInputText] = useState("");
   const [isAnimationLocked, setIsAnimationLocked] = useState(false);
-  const [status, setStatus] = useState('Your thoughts matter! Start typing to get insights. 🧠');
+  const [status, setStatus] = useState(
+    "Your thoughts matter! Start typing to get insights. 🧠"
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
 
@@ -61,62 +69,59 @@ const App = () => {
         ? Math.sqrt(x * frequency) - currentOffset
         : Math.sqrt(x * frequency) + currentOffset;
       return ystart - Math.sin(phase) * (x - xstart) * amplitude;
-    }, [frequency, amplitude, xstart, ystart]
+    },
+    [frequency, amplitude, xstart, ystart]
   );
 
   // Function to update arms
-  const updateArms = useCallback(
-    () => {
-      let x = xstart;
-      let dataL = `M ${xstart} ${ystart}`;
-      let dataR = `M ${xstart} ${ystart}`;
-  
-      while (x < xstart + length) {
-        const newYL = createCurve(x, offsetRef.current);
-        const newYR = createCurve(x, offsetRef.current, true);
-        dataL = `${dataL} L ${x} ${newYL}`;
-        dataR = `${dataR} L ${x} ${newYR}`;
-        x += 1;
-      }
-  
-      setArmPathL(dataL);
-      setArmPathR(dataR);
-    }, [createCurve, length, xstart, ystart]
-  );
+  const updateArms = useCallback(() => {
+    let x = xstart;
+    let dataL = `M ${xstart} ${ystart}`;
+    let dataR = `M ${xstart} ${ystart}`;
+
+    while (x < xstart + length) {
+      const newYL = createCurve(x, offsetRef.current);
+      const newYR = createCurve(x, offsetRef.current, true);
+      dataL = `${dataL} L ${x} ${newYL}`;
+      dataR = `${dataR} L ${x} ${newYR}`;
+      x += 1;
+    }
+
+    setArmPathL(dataL);
+    setArmPathR(dataR);
+  }, [createCurve, length, xstart, ystart]);
 
   // Animation loop
-  const loop = useCallback(
-    () => {
-      if (animation !== "typing" && animation !== "stressed") {
-        cancelAnimationFrame(loopRef.current);
-        return;
-      }
-  
-      offsetRef.current += 0.3;
-      if (offsetRef.current > Math.PI * 2) {
-        offsetRef.current = 0;
-      }
+  const loop = useCallback(() => {
+    if (animation !== "typing" && animation !== "stressed") {
+      cancelAnimationFrame(loopRef.current);
+      return;
+    }
 
-      updateArms();
+    offsetRef.current += 0.3;
+    if (offsetRef.current > Math.PI * 2) {
+      offsetRef.current = 0;
+    }
 
-      loopRef.current = requestAnimationFrame(loop);
-    }, [animation, updateArms]
-  );
-  
+    updateArms();
+
+    loopRef.current = requestAnimationFrame(loop);
+  }, [animation, updateArms]);
+
   // Handlers for input interactions
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
-  
+
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  
+
   const handleFocus = () => {
     setIsFocused(true);
     setIsTyping(false); // Reset typing state on focus
   };
-  
+
   const handleBlur = () => {
     setIsFocused(false);
     setIsTyping(false); // Rest typing state on blur
@@ -125,8 +130,8 @@ const App = () => {
   // Handler for input text change
   const handleTextChange = (event) => {
     setIsTyping(true);
-      setInputText(event.target.value);
-  
+    setInputText(event.target.value);
+
     if (typingTimerRef.current) {
       clearTimeout(typingTimerRef.current);
     }
@@ -162,12 +167,27 @@ const App = () => {
         setFps(speed || 60);
       }
       // Else, do not change the animation state as input interactions have higher priority
-    }, [isAnimationLocked]
+    },
+    [isAnimationLocked]
   );
 
+  // setVh logic calc
+  const updateVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  
   // Function to set toggle mode button
   const handleToggleMode = () => {
     setIsToggled(!isToggled);
+    updateVh();
+
+    //Force a repaint for safari
+    const body = document.body;
+    body.style.display = "none";
+    requestAnimationFrame(() => {
+      body.style.display = '';
+    })
   };
 
   const mode = isToggled ? "dark-mode" : "";
@@ -176,7 +196,7 @@ const App = () => {
     if (event.key === "Enter") {
       buttonRef.current.click();
     }
-  }
+  };
 
   useEffect(() => {
     setStatus(getRandomMessage(statusMessages.sleeping));
@@ -193,7 +213,7 @@ const App = () => {
 
     return () => {
       cancelAnimationFrame(loopRef.current);
-    }
+    };
   }, [animation, loop]);
 
   // Initialize arms update on mount
@@ -202,20 +222,22 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-
-
   // Handler for input button click
   const handleInputButtonClick = async () => {
+    // const startTime = Date.now();
+    // console("now", startTime)
+    // let remaining = 4000;
+
     if (!inputText.trim()) {
-      setStatus("Please enter some text for sentiment analysis.");
+      setStatus("How was the latest movie you watched...");
       return;
     }
     // set to 'typing' and lock animation
-    handleSetAnimation('typing');
+    handleSetAnimation("typing");
     setIsAnimationLocked(true);
     setStatus(getRandomMessage(statusMessages.typing));
     setIsLoading(true);
+    console.log("1==", animation, isAnimationLocked, status, isLoading);
 
     // clear any existing timers
     if (typingTimerRef.current) {
@@ -225,18 +247,51 @@ const App = () => {
       clearTimeout(stressTimerRef.current);
     }
 
+    console.log("2==", animation, isAnimationLocked, status, isLoading);
+    const startTime = Date.now();
+    stressTimerRef.current = setTimeout(() => {
+      handleSetAnimation("stressed");
+      setStatus(getRandomMessage(statusMessages.stressed));
+      console.log("3==", animation, isAnimationLocked, status, isLoading);
+
+      // remaining = 0;
+    }, 2000);
+
     try {
       // Send POST request to Flask backend using the analyzeSentiment function
+      // const result = await analyzeSentiment(inputText);
+      console.log("4==", animation, isAnimationLocked, status, isLoading);
       const result = await analyzeSentiment(inputText);
+      const elapsedTime = Date.now() - startTime;
+      // console.log(elapsedTime)
+      const remainingTime = 5000 - elapsedTime;
 
-      stressTimerRef.current = setTimeout(async () => {
-        handleSetAnimation('stressed');
-        setStatus(getRandomMessage(statusMessages.stressed));
-      }, 4000);
-      
-      setStatus(`Sentiment analysis result: Your mood is ${result.sentiment} (with a score of ${(result.probability * 100).toFixed(2)}%)`);
-      setIsAnimationLocked(false);
-      setIsLoading(false);
+      // console.log(remainingTime)
+      console.log("result:", result.sentiment);
+      if (remainingTime > 2000) {
+        await new Promise((resolve) => setTimeout(resolve, remainingTime));
+      }
+      // while (remaining > 0) {
+      //   await new Promise(resolve => setTimeout(resolve, remainingTime));
+      // }
+
+      console.log("5==", animation, isAnimationLocked, status, isLoading);
+      setStatus(
+        <span id="result-span">
+          <span id="result-user-input-title">You said: &quot;</span>
+          <span id="result-user-input">
+            {inputText}.&quot;
+            <br />
+          </span>
+          <span id="result-body">
+            Which seems to be {(result.probability * 100).toFixed(2)}%{" "}
+            <strong>{result.sentiment.toLowerCase()}</strong> to me! Am I right
+            😉🍻?
+          </span>
+        </span>
+      );
+      // setIsAnimationLocked(false);
+      // setIsLoading(false);
     } catch (error) {
       console.error("Error analyzing sentiment:", error);
       setStatus("Error analyzing sentiment. Please try again.");
@@ -247,27 +302,30 @@ const App = () => {
       setAnimationState("sleeping");
       setIsLoading(false);
     }
+    console.log("6==", animation, isAnimationLocked, status, isLoading);
   };
 
   // function to set the --vh custom property
   useEffect(() => {
-    const setVh = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-    // Initial setting
-    setVh();
+    updateVh();
+    // const setVh = () => {
+    //   const vh = window.innerHeight * 0.01;
+    //   document.documentElement.style.setProperty("--vh", `${vh}px`);
+    // };
+    // // Initial setting
+    // setVh();
 
     // Update on resize
-    window.addEventListener('resize', setVh);
+    // window.addEventListener("resize", setVh);
+    window.addEventListener("resize", updateVh);
 
     // Cleanup
     return () => {
-      window.removeEventListener('resize', setVh);
+      window.removeEventListener("resize", updateVh);
+      window.removeEventListener("orientationchange", updateVh);
+      
     };
   }, []);
-
-
 
   // Cleanup timers and animation frames on unmount
   useEffect(() => {
@@ -284,45 +342,43 @@ const App = () => {
 
   return (
     <div className={`App ${mode}`}>
-      <div className='header-container'>
-        <p>Ali Vafaei.</p>
-        <button id='mode-button'
-        onClick={handleToggleMode}
-        >
-          {!isToggled ? 
-            <Sun size={16} strokeWidth={2.5} className='toggle-icon'/> :
-            <Moon size={16} strokeWidth={2.5} className='toggle-icon'/>
-          }
-          {isToggled ? 'Light Mode' : 'Dark Mode'}
-        </button>
-      </div>
-      <div className='separator-container' id='separator-top'></div>
-      <div className='main-container'>
-        {/* <h1>Sentiment Analysis</h1> */}
-        {/* <div className='separator-container'></div> */}
-        <div id='character-wrapper'>
-          <ArmLeft animation={animation} armPath={armPathL} />
-          <Character animation={animation} />
-          <ArmRight animation={animation} armPath={armPathR} />
-          <Table />
-          <Computer animation={animation} />
+      {/* <div className="container"> */}
+        <div className="header-container">
+          <p>Ali Vafaei.</p>
+          <button id="mode-button" onClick={handleToggleMode}>
+            {!isToggled ? (
+              <Sun size={16} strokeWidth={2.5} className="toggle-icon" />
+            ) : (
+              <Moon size={16} strokeWidth={2.5} className="toggle-icon" />
+            )}
+            {isToggled ? "Light Mode" : "Dark Mode"}
+          </button>
         </div>
-        <div id='status'>
-          <p>
-            {status}
-          </p>
-          {isLoading && <p>Loading...</p>} {/* Display loading message if isLoading is true */}
+        <div className="separator-container" id="separator-top"></div>
+        <div className="main-container">
+          {/* <h1>Sentiment Analysis</h1> */}
+          {/* <div className='separator-container'></div> */}
+          <div id="character-wrapper">
+            <ArmLeft animation={animation} armPath={armPathL} />
+            <Character animation={animation} />
+            <ArmRight animation={animation} armPath={armPathR} />
+            <Table />
+            <Computer animation={animation} />
+          </div>
+          <div id="status">
+            <p>{status}</p>
+            {isLoading && <p>Loading...</p>}{" "}
+            {/* Display loading message if isLoading is true */}
+          </div>
+          {/* <AnimationControls onSetAnimation={handleSetAnimation} /> */}
+          {/* Text Input with Button */}
+          <div className="separator-container" id="separator-bottom"></div>
         </div>
-        {/* <AnimationControls onSetAnimation={handleSetAnimation} /> */}
-        {/* Text Input with Button */}
-        <div className='separator-container' id='separator-bottom'></div>
-        
-      </div>
-      <div className='input-container'>
+        <div className="input-container">
           <input
             type="text"
-            className='input'
-            placeholder='What do you think about?'
+            className="input"
+            placeholder="How was the latest movie you watched...?"
             value={inputText}
             onChange={handleTextChange}
             onMouseEnter={handleMouseEnter}
@@ -332,10 +388,10 @@ const App = () => {
             disabled={isAnimationLocked}
             onKeyDown={handleKeyDown}
           />
-          <button 
-            className='input-button'
+          <button
+            className="input-button"
             onClick={handleInputButtonClick}
-            aria-label='Trigger Sentiment Analysis'
+            aria-label="Trigger Sentiment Analysis"
             disabled={isAnimationLocked || !inputText.trim()} // Disable button if animation is locked
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -344,21 +400,20 @@ const App = () => {
             ref={buttonRef}
           >
             {/* Right Arrow SVG Icon */}
-            <SendHorizontal size={20} strokeWidth={2.5}/>
+            <SendHorizontal size={20} strokeWidth={2.5} />
           </button>
         </div>
-        <div className='footer-container'>
-          <p className='caption'>
-            Model trained on 50,000 IMDB reviews · Accuracy: {'>'}92%; Loss: 0.1963
+        <div className="footer-container">
+          <p className="caption">
+            Model trained on 50,000 IMDB reviews · Accuracy: {">"}92%; Loss:
+            0.1963
           </p>
-          <a 
-          href='https://github.com/itsalivafaei/sentiment/' 
-          target='_blank'
-          >
-          Github Repo
+          <a href="https://github.com/itsalivafaei/sentiment/" target="_blank">
+            Github Repo
           </a>
         </div>
-      {/* <div className='separator-container'></div> */}
+        {/* <div className='separator-container'></div> */}
+      {/* </div> */}
     </div>
   );
 };

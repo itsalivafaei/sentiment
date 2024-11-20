@@ -22,11 +22,8 @@ export const statusMessages = {
       "Analyzing your input... 📊"
     ],
     sleeping: [
-        "I'm enjoying labeling other thoughts! 💤 Let me know yours...",
-        "Hey there! Ready to share your feelings? 😊",
-        "Feel free to type in your thoughts for sentiment analysis! 📈",
-        "Your thoughts matter! Start typing to get insights. 🧠",
-        "Let's dive into your emotions. Type something! 🌊"
+      "Share your thoughts for sentiment analysis! 📈",
+      "I can analyze your emotions! 🧠 Just write it to me...",
     ],
     typing: [
       "I'm figuring out your emotions... 🕵️‍♂️",
@@ -36,11 +33,7 @@ export const statusMessages = {
       "Understanding your emotions... 🧘‍♀️"
     ],
     stressed: [
-      "Trying to figure out the results... 🧐",
-      "Determining your emotional state... 🧭",
-      "Analyzing data... 📈",
-      "Working on your sentiment analysis... 🔧",
-      "Processing information... 🗄️"
+      "Processing… first analysis might take a bit longer. Thanks for your patience!",
     ],
     finished: [
       "All done! 🎉",
