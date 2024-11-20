@@ -292,8 +292,6 @@ input {
   align-items: center;
   justify-content: right;
   // padding-bottom: env(safe-area-inset-bottom, 12px);
-  padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
-
   @include mixins.responsive ('mobile') {
     margin-bottom: 8px;
   }
@@ -383,11 +381,13 @@ input {
 
   @include mixins.responsive ('mobile') {
     font-size: 10px;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
   }
 
   @include mixins.responsive ('tablet') {
     flex-direction: column;
     line-height: 0.75em;
     gap: 0;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
   }
 }
